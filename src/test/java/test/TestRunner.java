@@ -8,14 +8,12 @@ import org.testng.annotations.Test;
 @RunWith(Cucumber.class)
 
 @CucumberOptions(
-		features = "src/test/java/aFeatures",
+		features = "src/test/java/Feature",
 		plugin = "pretty",
 		snippets = CucumberOptions.SnippetType.CAMELCASE,
-		glue = {""},
-		monochrome = true, 
-		dryRun = false, 
-		//strict = true,
-		tags = "@PCAInformeFazUmCadastro"
+		glue = {"Steps", "Setups"},
+		monochrome = true,
+		dryRun = false
 		)
 
 @Test(priority = 11)

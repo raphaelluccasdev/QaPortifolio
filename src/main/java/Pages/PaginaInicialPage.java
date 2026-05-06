@@ -40,6 +40,10 @@ public class PaginaInicialPage extends PaginaInicialElements {
 
 	}
 
+	public boolean validaExistenciaLogo() throws Throwable {
+		return verificaExistenciaDeElementoNaTela(LOGO, 1);
+	}
+
 	public boolean validaExistenciaPaginaInicial() throws Throwable {
 		return verificaExistenciaDeElementoNaTela(SIDEBAR_PAGINA_INICIAL, 1);
 	}
