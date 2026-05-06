@@ -1,13 +1,13 @@
 package Utils;
 
 import java.io.File;
-import java.io.IOException;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 import io.cucumber.java.Scenario;
 
 public class ReportUtils extends seleniumUtils {
@@ -19,13 +19,21 @@ public class ReportUtils extends seleniumUtils {
 
 	public static void criarReport(Scenario cenario) {
 		if (extentReport == null) {
-			extentReport = new ExtentReports();
 			String dir = System.getProperty("user.dir");
-			seleniumUtils.criarDiretorio(dir + "\\report");
-			limpaDiretorios();
-			setDiretorioReport("./report/");
-			seleniumUtils.criarDiretorio(diretorioReport);
-			htmlReporter = new ExtentSparkReporter(diretorioReport + "\\report.html");
+			String reportDir = dir + "/report";
+			setDiretorioReport(reportDir);
+			seleniumUtils.criarDiretorio(reportDir);
+			seleniumUtils.criarDiretorio(reportDir + "/screenshots");
+
+			htmlReporter = new ExtentSparkReporter(reportDir + "/report.html");
+			htmlReporter.config().setDocumentTitle("Relatório de Testes - QA Portfolio");
+			htmlReporter.config().setReportName("Automação Web");
+			htmlReporter.config().setTheme(Theme.DARK);
+
+			extentReport = new ExtentReports();
+			extentReport.setSystemInfo("Ambiente", "QA");
+			extentReport.setSystemInfo("Browser", "Chrome");
+			extentReport.setSystemInfo("Framework", "Selenium + Cucumber");
 			extentReport.attachReporter(htmlReporter);
 		}
 		extentTest = extentReport.createTest(cenario.getName());
@@ -67,11 +75,9 @@ public class ReportUtils extends seleniumUtils {
 		extentTest.log(status, mensagem);
 		extentReport.flush();
 	}
-	
+
 	public static void limpaDiretorios() {
-		File report = new File(System.getProperty("user.dir") + "\\report");
+		File report = new File(System.getProperty("user.dir") + "/report");
 		deletarArquivo(report);
-		File screenshots = new File(System.getProperty("user.dir") + "\\report\\screenshots");
-		deletarArquivo(screenshots);
 	}
 }
