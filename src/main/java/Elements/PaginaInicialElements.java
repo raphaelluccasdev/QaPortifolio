@@ -33,4 +33,10 @@ public class PaginaInicialElements extends seleniumUtils{
 	@FindBy(css = ".row .col-sm-9 .text-center")
 	public WebElement TEXTO_TEST;
 
+	@FindBy(css = ".productinfo")
+	public List<WebElement> IMAGEM_PRE_DROPDOWN;
+
+	@FindBy(css = ".product-overlay .overlay-content")
+	public List<WebElement> OVERLAY_PAGINA_INICIAL;
+
 }
