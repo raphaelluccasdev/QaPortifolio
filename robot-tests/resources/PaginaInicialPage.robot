@@ -15,6 +15,8 @@ ${TEXTO_TEST}              css:.row .col-sm-9 .text-center
 ${BOTAO_CART_INDEX}        2
 ${BOTAO_LOGIN_INDEX}       3
 ${BOTAO_TEST_INDEX}        4
+${IMAGEM_PRE_DROPDOWN}     css:.productinfo
+${OVERLAY}                 css:.product-overlay .overlay-content
 
 *** Keywords ***
 
@@ -71,3 +73,12 @@ Validar Que Estou Na Tela De Test
 Voltar Para A Página Anterior
     Go Back
     Wait Until Element Is Visible    ${SIDEBAR_HOME}    ${TIMEOUT}
+
+Passar Mouse Sobre Primeiro Produto
+    ${produtos}=    Get WebElements    ${IMAGEM_PRE_DROPDOWN}
+    Mouse Over    ${produtos}[0]
+
+Validar Que O Overlay Está Visível
+    ${overlays}=    Get WebElements    ${OVERLAY}
+    Wait Until Element Is Visible    ${overlays}[0]    ${TIMEOUT}
+    Element Should Be Visible        ${overlays}[0]

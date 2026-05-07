@@ -28,6 +28,11 @@ Validar Botão Test
     Validar Que Estou Na Tela De Test
     Voltar Para A Página Anterior
 
+Validar Overlay Ao Passar Mouse Sobre Produto
+    [Tags]    PaginaInicialOverlay
+    Passar Mouse Sobre Primeiro Produto
+    Validar Que O Overlay Está Visível
+
 *** Keywords ***
 
 Executar Contexto Inicial

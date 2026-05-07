@@ -1,6 +1,7 @@
 package Pages;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
 import Elements.PaginaInicialElements;
@@ -58,5 +59,15 @@ public class PaginaInicialPage extends PaginaInicialElements {
 
 	public boolean validaExistenciaTest() throws Throwable {
 		return verificaExistenciaDeElementoNaTela(TEXTO_TEST, 1);
+	}
+
+	public void hoverPrimeiroProduto() {
+		esperaElementos(IMAGEM_PRE_DROPDOWN, 2);
+		Actions actions = new Actions(driver);
+		actions.moveToElement(IMAGEM_PRE_DROPDOWN.get(0)).perform();
+	}
+
+	public boolean validaOverlayProduto() {
+		return verificaExistenciaDeElementoNaTela(OVERLAY_PAGINA_INICIAL.get(0), 2);
 	}
 }
