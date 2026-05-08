@@ -163,8 +163,7 @@ pipeline {
                     reportFileName  : 'report.html',
                     logFileName     : 'log.html',
                     passThreshold   : 80.0,
-                    unstableThreshold: 60.0,
-                    onlyCritical    : false
+                    unstableThreshold: 60.0
                 )
             }
         }
