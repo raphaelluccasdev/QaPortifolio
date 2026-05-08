@@ -9,6 +9,10 @@ pipeline {
     // =========================================================================
     agent any
 
+    tools {
+        maven 'Maven'
+    }
+
     // =========================================================================
     // ENVIRONMENT
     // Variáveis de ambiente injetadas em todos os stages.
