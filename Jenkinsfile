@@ -124,7 +124,7 @@ pipeline {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                     sh """
                         cd ${ROBOT_DIR}
-                        source ../.venv/bin/activate
+                        . ../.venv/bin/activate
                         robot \
                             --outputdir ../${ROBOT_OUTPUT} \
                             --variable HEADLESS:true \
