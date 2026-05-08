@@ -125,7 +125,7 @@ pipeline {
                     sh """
                         python3 -m venv .venv
                         . .venv/bin/activate
-                        pip install --quiet robotframework robotframework-seleniumlibrary webdrivermanager
+                        pip install --quiet robotframework robotframework-seleniumlibrary
                         robot \
                             --outputdir ${ROBOT_OUTPUT} \
                             --variable HEADLESS:true \
