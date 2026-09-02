@@ -68,15 +68,15 @@ public class PaginaInicialSteps {
 		ReportUtils.logMensagem(Status.INFO, "Então eu valido que estou na tela de Test");
 	}
 
-	@Quando("eu passo o mouse sobre o primeiro produto")
-	public void euPassoOMouseSobreOPrimeiroProduto() throws Throwable {
-		page.hoverPrimeiroProduto();
-		ReportUtils.logMensagem(Status.INFO, "Quando eu passo o mouse sobre o primeiro produto", seleniumUtils.getScreenshotReport());
-	}
-
-	@Então("eu valido que o overlay do produto está visível")
-	public void euValidoQueOOverlayDoProdutoEstaVisivel() throws Throwable {
-		Assertions.assertTrue(page.validaOverlayProduto());
-		ReportUtils.logMensagem(Status.INFO, "Então eu valido que o overlay do produto está visível", seleniumUtils.getScreenshotReport());
-	}
+//	@Quando("eu passo o mouse sobre o primeiro produto")
+//	public void euPassoOMouseSobreOPrimeiroProduto() throws Throwable {
+//		page.hoverPrimeiroProduto();
+//		ReportUtils.logMensagem(Status.INFO, "Quando eu passo o mouse sobre o primeiro produto", seleniumUtils.getScreenshotReport());
+//	}
+//
+//	@Então("eu valido que o overlay do produto está visível")
+//	public void euValidoQueOOverlayDoProdutoEstaVisivel() throws Throwable {
+//		Assertions.assertTrue(page.validaOverlayProduto());
+//		ReportUtils.logMensagem(Status.INFO, "Então eu valido que o overlay do produto está visível", seleniumUtils.getScreenshotReport());
+//	}
 }

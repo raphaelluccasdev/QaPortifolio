@@ -6,15 +6,14 @@ Resource         config.robot
 
 *** Variables ***
 ${LOGO}                    css:.col-sm-4 .logo
-${BOTOES_HEADER}           css:.col-sm-8 .shop-menu .navbar-nav li
 ${SIDEBAR_HOME}            css:.col-sm-3 .left-sidebar
 ${TEXTO_SHOPPING_CART}     css:.breadcrumb .active
 ${BOTAO_LOGIN}             css:.col-sm-4 .login-form .btn
 ${TEXTO_TEST}              css:.row .col-sm-9 .text-center
 
-${BOTAO_CART_INDEX}        2
-${BOTAO_LOGIN_INDEX}       3
-${BOTAO_TEST_INDEX}        4
+${BOTAO_CART}              css:.shop-menu a[href="/view_cart"]
+${BOTAO_LOGIN_HEADER}      css:.shop-menu a[href="/login"]
+${BOTAO_TEST}              css:.shop-menu a[href="/test_cases"]
 ${IMAGEM_PRE_DROPDOWN}     css:.productinfo
 ${OVERLAY}                 css:.product-overlay .overlay-content
 
@@ -26,10 +25,8 @@ Abrir Navegador E Acessar Site
     Call Method    ${options}    add_argument    --disable-dev-shm-usage
     Call Method    ${options}    add_argument    --disable-popup-blocking
     Call Method    ${options}    add_argument    --disable-notifications
-    ${caps}=       Evaluate    {'pageLoadStrategy': 'eager'}
     Call Method    ${options}    set_capability    pageLoadStrategy    eager
-    ${service}=    Evaluate    selenium.webdriver.chrome.service.Service(executable_path='${CHROMEDRIVER}')    selenium.webdriver.chrome.service
-    Open Browser    ${URL_SITE}    ${BROWSER}    service=${service}    options=${options}
+    Open Browser    ${URL_SITE}    ${BROWSER}    options=${options}
     Maximize Browser Window
 
 Fechar Navegador
@@ -47,16 +44,16 @@ Validar Que Estou Na Tela Home
     Element Should Be Visible        ${SIDEBAR_HOME}
 
 Clicar No Botão Cart
-    ${botoes}=    Get WebElements    ${BOTOES_HEADER}
-    Click Element    ${botoes}[${BOTAO_CART_INDEX}]
+    Wait Until Element Is Visible    ${BOTAO_CART}    ${TIMEOUT}
+    Click Element    ${BOTAO_CART}
 
 Clicar No Botão Login
-    ${botoes}=    Get WebElements    ${BOTOES_HEADER}
-    Click Element    ${botoes}[${BOTAO_LOGIN_INDEX}]
+    Wait Until Element Is Visible    ${BOTAO_LOGIN_HEADER}    ${TIMEOUT}
+    Click Element    ${BOTAO_LOGIN_HEADER}
 
 Clicar No Botão Test
-    ${botoes}=    Get WebElements    ${BOTOES_HEADER}
-    Click Element    ${botoes}[${BOTAO_TEST_INDEX}]
+    Wait Until Element Is Visible    ${BOTAO_TEST}    ${TIMEOUT}
+    Click Element    ${BOTAO_TEST}
 
 Validar Que Estou Na Tela Cart
     Wait Until Element Is Visible    ${TEXTO_SHOPPING_CART}    ${TIMEOUT}

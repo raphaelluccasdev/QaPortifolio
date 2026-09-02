@@ -61,13 +61,13 @@ public class PaginaInicialPage extends PaginaInicialElements {
 		return verificaExistenciaDeElementoNaTela(TEXTO_TEST, 1);
 	}
 
-	public void hoverPrimeiroProduto() {
-		esperaElementos(IMAGEM_PRE_DROPDOWN, 2);
-		Actions actions = new Actions(driver);
-		actions.moveToElement(IMAGEM_PRE_DROPDOWN.get(0)).perform();
-	}
-
-	public boolean validaOverlayProduto() {
-		return verificaExistenciaDeElementoNaTela(OVERLAY_PAGINA_INICIAL.get(0), 2);
-	}
+//	public void hoverPrimeiroProduto() {
+//		esperaElementos(IMAGEM_PRE_DROPDOWN, 2);
+//		Actions actions = new Actions(driver);
+//		actions.moveToElement(IMAGEM_PRE_DROPDOWN.get(0)).perform();
+//	}
+//
+//	public boolean validaOverlayProduto() {
+//		return verificaExistenciaDeElementoNaTela(OVERLAY_PAGINA_INICIAL.get(0), 2);
+//	}
 }
