@@ -70,6 +70,29 @@ robot robot-tests/tests/PaginaInicial.robot
 
 O relatório será gerado em `log.html` e `report.html` na raiz do projeto.
 
+### Docker
+
+O Docker Compose inicia um container com Chrome/Selenium e outro com o Maven,
+permitindo executar os testes sem instalar Java, Maven ou Chrome localmente:
+
+```bash
+docker compose up --build --exit-code-from tests
+```
+
+O relatório HTML ficará disponível em `report/report.html`. Para remover os
+containers após a execução:
+
+```bash
+docker compose down
+```
+
+### GitHub Actions
+
+O workflow em `.github/workflows/ci-cd.yml` executa automaticamente os testes
+Cucumber e Robot Framework em todo push ou pull request para `main`, `master` ou
+`develop`. Os relatórios HTML e os resultados dos testes ficam disponíveis como
+artefatos na execução do workflow por 14 dias.
+
 ## Padrões utilizados
 
 - **Page Object Model** — separação entre locators, ações e steps

@@ -1,0 +1,12 @@
+.git
+.idea
+.vscode
+.venv
+.robotcode_cache
+target
+report
+screenshots
+output.xml
+log.html
+report.html
+*.iml

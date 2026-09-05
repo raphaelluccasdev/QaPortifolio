@@ -1,0 +1,80 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+  pull_request:
+    branches:
+      - main
+      - master
+      - develop
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  automated-tests:
+    name: Build and run automated tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Docker Compose
+        run: docker compose config
+
+      - name: Build and run Cucumber tests
+        run: docker compose up --build --exit-code-from tests
+
+      - name: Stop containers
+        if: always()
+        run: docker compose down --volumes --remove-orphans
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: automated-test-reports
+          path: |
+            report/
+            target/surefire-reports/
+          if-no-files-found: warn
+          retention-days: 14
+
+  robot-tests:
+    name: Run Robot Framework tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: robot-tests/requirements.txt
+
+      - name: Install virtual display
+        run: sudo apt-get update && sudo apt-get install --yes xvfb
+
+      - name: Install Robot Framework dependencies
+        run: python -m pip install --requirement robot-tests/requirements.txt
+
+      - name: Run Robot Framework tests
+        run: xvfb-run --auto-servernum robot --outputdir robot-tests/results robot-tests/tests/PaginaInicial.robot
+
+      - name: Upload Robot Framework reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: robot-test-reports
+          path: robot-tests/results/
+          if-no-files-found: warn
+          retention-days: 14
