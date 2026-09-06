@@ -1,0 +1,246 @@
+{
+  "info": {
+    "_postman_id": "6dd3aeb5-d1a8-48a1-8d67-automationexercise",
+    "name": "Automation Exercise - API Tests",
+    "description": "Cenario de API: criar, autenticar, consultar, atualizar e excluir um usuario.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://automationexercise.com/api"
+    },
+    {
+      "key": "email",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": "Senha@123"
+    }
+  ],
+  "item": [
+    {
+      "name": "1 - Criar usuario",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const email = `qa_${Date.now()}@example.com`;",
+              "pm.collectionVariables.set('email', email);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status deve ser 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "const response = pm.response.json();",
+              "pm.test('Mensagem deve confirmar a criacao', function () {",
+              "    pm.expect(response.message).to.eql('User created!');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "name", "value": "Usuario Teste", "type": "text" },
+            { "key": "email", "value": "{{email}}", "type": "text" },
+            { "key": "password", "value": "{{password}}", "type": "text" },
+            { "key": "title", "value": "Mr", "type": "text" },
+            { "key": "birth_date", "value": "10", "type": "text" },
+            { "key": "birth_month", "value": "05", "type": "text" },
+            { "key": "birth_year", "value": "1995", "type": "text" },
+            { "key": "firstname", "value": "Usuario", "type": "text" },
+            { "key": "lastname", "value": "Teste", "type": "text" },
+            { "key": "company", "value": "QA Company", "type": "text" },
+            { "key": "address1", "value": "Rua Teste 123", "type": "text" },
+            { "key": "address2", "value": "", "type": "text" },
+            { "key": "country", "value": "Canada", "type": "text" },
+            { "key": "zipcode", "value": "12345", "type": "text" },
+            { "key": "state", "value": "Ontario", "type": "text" },
+            { "key": "city", "value": "Toronto", "type": "text" },
+            { "key": "mobile_number", "value": "11999999999", "type": "text" }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/createAccount",
+          "host": ["{{baseUrl}}"],
+          "path": ["createAccount"]
+        }
+      }
+    },
+    {
+      "name": "2 - Validar login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text",
+            "exec": [
+              "pm.test('Status deve ser 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const response = pm.response.json();",
+              "pm.test('Mensagem deve confirmar o login', function () {",
+              "    pm.expect(response.message).to.eql('User exists!');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "email", "value": "{{email}}", "type": "text" },
+            { "key": "password", "value": "{{password}}", "type": "text" }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/verifyLogin",
+          "host": ["{{baseUrl}}"],
+          "path": ["verifyLogin"]
+        }
+      }
+    },
+    {
+      "name": "3 - Consultar usuario",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text",
+            "exec": [
+              "pm.test('Status deve ser 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const response = pm.response.json();",
+              "pm.test('Resposta deve conter o usuario criado', function () {",
+              "    pm.expect(response.user).to.be.an('object');",
+              "    pm.expect(response.user.email).to.eql(pm.collectionVariables.get('email'));",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/getUserDetailByEmail?email={{email}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["getUserDetailByEmail"],
+          "query": [
+            { "key": "email", "value": "{{email}}" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "4 - Atualizar usuario",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text",
+            "exec": [
+              "pm.test('Status deve ser 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const response = pm.response.json();",
+              "pm.test('Mensagem deve confirmar a atualizacao', function () {",
+              "    pm.expect(response.message).to.eql('User updated!');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "name", "value": "Usuario Atualizado", "type": "text" },
+            { "key": "email", "value": "{{email}}", "type": "text" },
+            { "key": "password", "value": "{{password}}", "type": "text" },
+            { "key": "title", "value": "Mr", "type": "text" },
+            { "key": "birth_date", "value": "10", "type": "text" },
+            { "key": "birth_month", "value": "05", "type": "text" },
+            { "key": "birth_year", "value": "1995", "type": "text" },
+            { "key": "firstname", "value": "Usuario", "type": "text" },
+            { "key": "lastname", "value": "Atualizado", "type": "text" },
+            { "key": "company", "value": "QA Company", "type": "text" },
+            { "key": "address1", "value": "Rua Atualizada 123", "type": "text" },
+            { "key": "address2", "value": "", "type": "text" },
+            { "key": "country", "value": "Canada", "type": "text" },
+            { "key": "zipcode", "value": "54321", "type": "text" },
+            { "key": "state", "value": "Ontario", "type": "text" },
+            { "key": "city", "value": "Toronto", "type": "text" },
+            { "key": "mobile_number", "value": "11888888888", "type": "text" }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/updateAccount",
+          "host": ["{{baseUrl}}"],
+          "path": ["updateAccount"]
+        }
+      }
+    },
+    {
+      "name": "5 - Excluir usuario",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text",
+            "exec": [
+              "pm.test('Status deve ser 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const response = pm.response.json();",
+              "pm.test('Mensagem deve confirmar a exclusao', function () {",
+              "    pm.expect(response.message).to.eql('Account deleted!');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "email", "value": "{{email}}", "type": "text" },
+            { "key": "password", "value": "{{password}}", "type": "text" }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/deleteAccount",
+          "host": ["{{baseUrl}}"],
+          "path": ["deleteAccount"]
+        }
+      }
+    }
+  ]
+}
